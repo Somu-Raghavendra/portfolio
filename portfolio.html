@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raghavendra Somu — SDET & Automation Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Fira+Code:wght@300;400;500&family=주아:wght@400&family=주아&display=swap" rel="stylesheet">
+<style>@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap');</style>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent: #00ff9d;
+    --accent2: #00b8ff;
+    --accent3: #ff6b6b;
+    --text: #e8e8f0;
+    --muted: #6b6b8a;
+    --card: #13131f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Fira Code', monospace;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: left 0.12s ease-out, top 0.12s ease-out, width 0.2s, height 0.2s;
+    opacity: 0.5;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text); }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,157,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,157,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridShift 20s linear infinite;
+  }
+  @keyframes gridShift {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(60px); }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,255,157,0.08) 0%, transparent 70%);
+    right: -100px; top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-style: normal;
+    margin-bottom: 1rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero-name .accent { color: var(--accent); }
+
+  .hero-title {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+    line-height: 1.8;
+  }
+  .hero-title strong { color: var(--accent2); font-weight: 400; }
+
+  .hero-summary {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 500;
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+    outline: 1px solid var(--accent);
+  }
+  .btn-ghost {
+    color: var(--text);
+    outline: 1px solid var(--border);
+  }
+  .btn-ghost:hover { outline-color: var(--accent); color: var(--accent); }
+
+  /* Terminal card */
+  .hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .terminal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 440px;
+    font-size: 0.78rem;
+    overflow: hidden;
+  }
+  .terminal-bar {
+    background: var(--surface);
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #28ca42; }
+  .terminal-title { color: var(--muted); font-size: 0.7rem; margin-left: 0.5rem; }
+  .terminal-body { padding: 1.5rem; line-height: 2; }
+  .t-line { display: block; }
+  .t-prompt { color: var(--accent); }
+  .t-cmd { color: var(--text); }
+  .t-output { color: var(--muted); padding-left: 1rem; display: block; }
+  .t-key { color: var(--accent2); }
+  .t-val { color: var(--accent3); }
+  .cursor-blink {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Stats bar */
+  .stats-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    background: var(--surface);
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+    display: block;
+  }
+
+  /* Sections */
+  section { padding: 6rem 4rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .section-num {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  /* Experience */
+  .exp-grid { display: flex; flex-direction: column; gap: 2px; }
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+  .exp-card:hover { border-color: rgba(0,255,157,0.3); }
+  .exp-card:hover::before { transform: scaleY(1); }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+    gap: 1rem;
+  }
+  .exp-company {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .exp-period {
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    border: 1px solid var(--accent);
+    padding: 0.2rem 0.6rem;
+    flex-shrink: 0;
+  }
+  .exp-role {
+    font-size: 0.78rem;
+    color: var(--accent2);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+  .exp-location {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .exp-bullets li {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.7;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+    font-size: 0.65rem;
+    top: 0.1rem;
+  }
+
+  /* Skills */
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+  }
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .skill-group:hover { border-color: rgba(0,255,157,0.3); }
+  .skill-group-title {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .skill-group-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-size: 0.72rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    color: var(--text);
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,255,157,0.05);
+  }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2px;
+  }
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,255,157,0.03) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(0,255,157,0.3); transform: translateY(-2px); }
+  .project-card:hover::after { opacity: 1; }
+  .project-num {
+    font-size: 3rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    color: rgba(0,255,157,0.06);
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .project-date {
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+  .project-desc {
+    font-size: 0.76rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.2rem;
+  }
+  .project-tag {
+    font-size: 0.65rem;
+    background: rgba(0,184,255,0.08);
+    border: 1px solid rgba(0,184,255,0.2);
+    color: var(--accent2);
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Education & Certs */
+  .edu-certs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .edu-card, .cert-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .edu-card:hover, .cert-card:hover { border-color: rgba(0,255,157,0.3); }
+  .edu-school {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .edu-degree { font-size: 0.76rem; color: var(--muted); margin-bottom: 0.5rem; line-height: 1.6; }
+  .edu-period { font-size: 0.68rem; color: var(--accent); letter-spacing: 0.1em; }
+
+  .cert-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .cert-item {
+    font-size: 0.75rem;
+    color: var(--muted);
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .cert-item::before {
+    content: '◆';
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+    font-size: 0.5rem;
+    top: 0.25rem;
+  }
+  .cert-item strong { color: var(--text); display: block; }
+
+  /* Contact */
+  .contact-section { background: var(--surface); }
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .contact-title .accent { color: var(--accent); }
+  .contact-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.8rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link .icon { font-size: 1rem; }
+
+  /* Footer */
+  footer {
+    padding: 1.5rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .footer-text { font-size: 0.7rem; color: var(--muted); }
+  footer .footer-accent { color: var(--accent); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-right { justify-content: center; }
+    section { padding: 4rem 1.5rem; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); padding: 2rem 1.5rem; }
+    .edu-certs-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<nav>
+  <a class="nav-logo" href="#"><span>Raghavendra </span>Somu</a>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-left">
+    <span class="hero-tag">Open To Opportunities</span>
+    <h1 class="hero-name">
+      Sasi Pavan<br>
+      <span class="accent">Raghavendra</span><br>
+      Somu
+    </h1>
+    <p class="hero-title">
+      <strong>SDET</strong> · <strong>Python</strong> · <strong>Robot Framework</strong> · <strong>Pytest</strong> · <strong>Selenium</strong> <br>
+      ~3 years of building bulletproof test automation
+    </p>
+    <p class="hero-summary">
+      Specializing in Python-based automation, REST API testing, and CI/CD integration. I craft robust test frameworks that catch bugs before they reach production.
+    </p>
+    <div class="hero-actions">
+  <a href="mailto:your-email@example.com" class="btn btn-primary">
+    <span class="icon">✉</span> Get In Touch
+  </a>
+  <a href="#experience" class="btn btn-ghost">View Work</a>
+  <a href="path-to-your-resume.pdf" download="Raghavendra_Somu_Resume" class="btn btn-ghost">
+    <span class="icon"><strong>⤓</strong></span> Resume
+  </a>
+</div>
+  </div>
+
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="terminal-title">~/raghavendra — zsh</span>
+      </div>
+      <div class="terminal-body">
+        <span class="t-line"><span class="t-prompt">❯</span> <span class="t-cmd">cat profile.json</span></span>
+        <span class="t-output">{</span>
+        <span class="t-output">&nbsp; <span class="t-key">"Role"</span>: <span class="t-val">"Senior SDET"</span>,</span>
+        <span class="t-output">&nbsp; <span class="t-key">"Experience"</span>: <span class="t-val">"~3 years"</span>,</span>
+        <span class="t-output">&nbsp; <span class="t-key">"Location"</span>: <span class="t-val">"Bangalore, IN"</span>,</span>
+        <span class="t-output">&nbsp; <span class="t-key">"Stack"</span>: <span class="t-val">["Python","Robot Framework","Pytest"]</span>,</span>
+        <span class="t-output">&nbsp; <span class="t-key">"CI/CD"</span>: <span class="t-val">["Jenkins","GitLab","Docker"]</span>,</span>
+        <span class="t-output">&nbsp; <span class="t-key">"Testing"</span>: <span class="t-val">["API","Regression","Performance"]</span></span>
+        <span class="t-output">}</span>
+        <span class="t-line"><span class="t-prompt">❯</span> <span class="t-cmd">_<span class="cursor-blink"></span></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+    <div class="stat">
+    <span class="stat-num">~3</span>
+    <span class="stat-label">Years of Experience</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">150+</span>
+    <span class="stat-label">Test Cases Automated</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">50+</span>
+    <span class="stat-label">Bugs Identified & Tracked</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">40%</span>
+    <span class="stat-label">Manual Testing Reduced</span>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Sanas AI</div>
+          <div class="exp-role">Senior SDET · Contract</div>
+          <div class="exp-location">Bangalore, Karnataka, India</div>
+        </div>
+        <span class="exp-period">08/2025 – 12/2025</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Extended framework compatibility from Windows-only to cross-platform (Windows + macOS) using PyAutoGUI and Pytest — enabling daily regression on both platforms.</li>
+        <li>Refactored 80 Windows-specific test cases to run seamlessly on macOS.</li>
+        <li>Automated 40+ new Windows application test cases, improving coverage and reducing manual validation time.</li>
+        <li>Contributed to Test Strategy and Framework Design, structuring modular, reusable automation components.</li>
+        <li>Actively monitored and fixed daily regression failures across macOS and Windows, ensuring stable runs and quick triage turnaround.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Komprise</div>
+          <div class="exp-role">Software Test Engineer</div>
+          <div class="exp-location">Bangalore, Karnataka, India</div>
+        </div>
+        <span class="exp-period">02/2024 – 12/2024</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Automated 70+ test cases using Robot Framework + Python, reducing manual testing time and enhancing efficiency by 40%.</li>
+        <li>Configured Jenkins jobs for regression testing across every release cycle; triaged and resolved 50+ regression issues per release, improving suite reliability by 30%.</li>
+        <li>Identified and verified 20+ bugs during regression triaging, maintaining a 100% resolution rate and zero regression issues at release.</li>
+        <li>Played a key role in configuring Jenkins slave nodes by creating and setting up VMs in vCenter and linking them to the Jenkins controller.</li>
+        <li>Automated the KCP SMB feature; identified and reported 30+ bugs, implemented scale and stress testing for this critical customer-focused component.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Uptycs</div>
+          <div class="exp-role">Software Engineer</div>
+          <div class="exp-location">Hyderabad, Telangana, India</div>
+        </div>
+        <span class="exp-period">09/2022 – 01/2024</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Led testing for the unified ingestion project, identifying and examining 30+ critical bugs to enhance system reliability by 40%.</li>
+        <li>Conducted sprint-based performance testing by running cloudquery and osquery loads, analyzing resource utilization and optimizing load execution efficiency.</li>
+        <li>Automated repetitive load tasks using Python, Bash, and Ansible — reducing manual effort by 50%.</li>
+        <li>Improved test coverage by 25% through Python and Bash scripting for functional and performance feature testing.</li>
+        <li>Monitored critical alerts with Grafana and prepared weekly reports on CPU usage, memory consumption, and lag metrics.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="background: var(--surface);">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Skills</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-container">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Bash</span>
+        <span class="skill-tag">PowerShell</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Test Automation</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Robot Framework</span>
+        <span class="skill-tag">Pytest</span>
+        <span class="skill-tag">Selenium</span>
+        <span class="skill-tag">PyAutoGUI</span>
+        <span class="skill-tag">Jira</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Testing Types</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Regression Testing</span>
+        <span class="skill-tag">REST API Testing</span>
+        <span class="skill-tag">Performance Testing</span>
+        <span class="skill-tag">Functional Testing</span>
+        <span class="skill-tag">Stress Testing</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">DevOps & CI/CD</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Jenkins</span>
+        <span class="skill-tag">GitLab</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Ansible</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Infrastructure & Monitoring</div>
+      <div class="skill-tags">
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Grafana</span>
+        <span class="skill-tag">vCenter</span>
+        <span class="skill-tag">ngrok</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Platforms & OS</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">macOS</span>
+        <span class="skill-tag">Windows</span>
+        <span class="skill-tag">AWS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">01</div>
+      <div class="project-date">July 2025</div>
+      <div class="project-title">Job Application Bot</div>
+      <p class="project-desc">
+        A Python Selenium script that automates job applications on Instahyre and Hirist — handling login, job search, filtering, and application submission. Includes logging to track the total jobs applied across runs. Used to successfully apply to 1,000+ jobs. Designed to be extensible to other platforms.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Selenium</span>
+        <span class="project-tag">Automation</span>
+        <span class="project-tag">Logging</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-date">March 2025</div>
+      <div class="project-title">Slack-Integrated JIRA Test Automation</div>
+      <p class="project-desc">
+        A Python-Flask webhook listener that automatically triggers test execution when a JIRA ticket moves to a specific status (e.g. "In Progress"). Results are pushed instantly to a Slack channel via Slack Webhooks and ngrok, giving the team real-time feedback and eliminating manual test triggers.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Flask</span>
+        <span class="project-tag">JIRA Webhooks</span>
+        <span class="project-tag">Slack</span>
+        <span class="project-tag">ngrok</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & CERTS -->
+<section style="background: var(--surface);">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education & Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="edu-certs-grid">
+    <div class="edu-card reveal">
+      <div class="edu-school">NIT Andhra Pradesh</div>
+      <div class="edu-degree">B.Tech in Electronics and Communication Engineering<br>National Institute of Technology Andhra Pradesh, Tadepalligudem</div>
+      <div class="edu-period">08/2018 – 05/2022</div>
+    </div>
+
+    <div class="cert-card reveal">
+      <div class="skill-group-title" style="margin-bottom:1.2rem; font-size:0.65rem; color:var(--accent); letter-spacing:0.2em; text-transform:uppercase;">Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <strong>AWS Certified Cloud Practitioner (CLF-C02)</strong>
+          LinkedIn Learning · 03/2026
+        </div>
+        <div class="cert-item">
+          <strong>SQL for Data Science</strong>
+          Coursera · 04/2022
+        </div>
+        <div class="cert-item">
+          <strong>Introduction to IoT and Embedded Systems</strong>
+          Coursera · 11/2020
+        </div>
+        <div class="cert-item">
+          <strong>Programming with Python</strong>
+          Internshala Trainings · 08/2019
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner reveal">
+    <h2 class="contact-title">Let's <span class="accent">connect.</span></h2>
+    <p class="contact-sub">
+      Open to new SDET / automation engineering roles. Whether you have a project, a question, or just want to talk test strategy — my inbox is open.
+    </p>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#fb899a9a9c939a8d9ad58894968ebb9c969a9297d5989496" class="contact-link">
+        <span class="icon">✉</span> Email Me
+      </a>
+      <a href="https://linkedin.com/in/somu-raghavendra" target="_blank" class="contact-link">
+        <span class="icon">in</span> LinkedIn
+      </a>
+      <a href="https://github.com/raaghava-somu" target="_blank" class="contact-link">
+        <span class="icon">⌥</span> GitHub
+      </a>
+      <a href="tel:+916303554221" class="contact-link">
+        <span class="icon">✆</span> +91 6303554221
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <span class="footer-text">© 2026 <span class="footer-accent">Raghavendra Somu</span></span>
+  <span class="footer-text">SDET · Python Automation Engineer · Bangalore, IN</span>
+</footer>
+
+<script>
+  // Custom cursor logic
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  });
+
+  // Scroll reveal animation logic
+  const reveals = document.querySelectorAll('.reveal');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  reveals.forEach((el) => observer.observe(el));
+</script>
+</body>
+</html>
