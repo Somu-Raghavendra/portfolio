@@ -224,23 +224,39 @@
   .btn-ghost:hover { outline-color: var(--accent); color: var(--accent); }
 
   /* Terminal card */
+  .terminal {
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.78rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
   .hero-right {
     position: relative;
     z-index: 2;
     display: flex;
-    justify-content: flex-end;
-    animation: fadeUp 0.6s 0.2s ease both;
+    justify-content: center;
   }
-  .terminal {
-    background: var(--card);
-    border: 1px solid var(--border);
-    width: 100%;
-    max-width: 440px;
-    font-size: 0.78rem;
+  .t-output {
+    color: var(--muted);
+    padding-left: 1rem;
+    display: block;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media (max-width: 900px) {
+    .terminal { font-size: 0.68rem; }
+    .terminal-body { padding: 1rem; line-height: 1.8; }
+  }
+  @media (max-width: 420px) {
+    .terminal { font-size: 0.6rem; }
   }
   .terminal-bar {
-    background: var(--surface);
+    background: #1a1a2e;
     padding: 0.7rem 1rem;
     display: flex;
     align-items: center;
@@ -252,11 +268,14 @@
   .dot-y { background: #ffbd2e; }
   .dot-g { background: #28ca42; }
   .terminal-title { color: var(--muted); font-size: 0.7rem; margin-left: 0.5rem; }
-  .terminal-body { padding: 1.5rem; line-height: 2; }
+  .terminal-body {
+    padding: 1.5rem;
+    line-height: 2;
+    background: #161b22;
+  }
   .t-line { display: block; }
   .t-prompt { color: var(--accent); }
   .t-cmd { color: var(--text); }
-  .t-output { color: var(--muted); padding-left: 1rem; display: block; }
   .t-key { color: var(--accent2); }
   .t-val { color: var(--accent3); }
   .cursor-blink {
@@ -391,21 +410,27 @@
     color: var(--accent);
     position: absolute;
     left: 0;
-    font-size: 0.65rem;
     top: 0.1rem;
+    font-size: 0.65rem;
   }
 
   /* Skills */
   .skills-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, minmax(260px, 1fr));
     gap: 2px;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
   }
   .skill-group {
     background: var(--card);
     border: 1px solid var(--border);
     padding: 2rem;
     transition: border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
   }
   .skill-group:hover { border-color: rgba(0,255,157,0.3); }
   .skill-group-title {
@@ -611,7 +636,27 @@
     transform: translateY(30px);
     transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+   .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+ .project-title a {
+    cursor: pointer !important;
+    pointer-events: all !important;
+    position: relative;
+    z-index: 10;
+  }
+
+  .project-card::after {
+    pointer-events: none;
+  }
+
+  @media (max-width: 1200px) {
+    .skills-container {
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+    }
+  }
 
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
@@ -858,8 +903,30 @@
   <div class="projects-grid">
     <div class="project-card reveal">
       <div class="project-num">01</div>
+      <div class="project-date">March 2026</div>
+      <div class="project-title">
+        <a href="https://mala-counter-online.netlify.app/" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,255,157,0.3);transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,255,157,0.9)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='rgba(0,255,157,0.3)';this.style.color='inherit'">
+          Mala Counter ↗
+        </a>
+      </div>
+      <p class="project-desc">
+        Developed a lightweight and user-friendly web-based Mala (Japa) Counter application to help users digitally track mantra/chant counts during meditation or spiritual practices. The application provides a seamless alternative to traditional physical mala beads by enabling users to increment counts with simple interactions and maintain focus on chanting. This project was built as a vibe coding experiment using Claude AI.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">VibeCoding</span>
+        <span class="project-tag">Claude AI</span>
+        <span class="project-tag">HTML</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
       <div class="project-date">July 2025</div>
-      <div class="project-title">Job Application Bot</div>
+      <div class="project-title">
+        <a href="https://github.com/Somu-Raghavendra/JobApplicationBot" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(0,255,157,0.3);transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(0,255,157,0.9)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='rgba(0,255,157,0.3)';this.style.color='inherit'">
+          Job Application Bot ↗
+        </a>
+      </div>
       <p class="project-desc">
         A Python Selenium script that automates job applications on Instahyre and Hirist — handling login, job search, filtering, and application submission. Includes logging to track the total jobs applied across runs. Used to successfully apply to 1,000+ jobs. Designed to be extensible to other platforms.
       </p>
@@ -872,7 +939,7 @@
     </div>
 
     <div class="project-card reveal">
-      <div class="project-num">02</div>
+      <div class="project-num">03</div>
       <div class="project-date">March 2025</div>
       <div class="project-title">Slack-Integrated JIRA Test Automation</div>
       <p class="project-desc">
@@ -977,14 +1044,11 @@
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.1
-  });
+  }, { threshold: 0.1 });
 
-  reveals.forEach((el) => observer.observe(el));
+  reveals.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
